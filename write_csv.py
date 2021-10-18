@@ -2,6 +2,9 @@ import csv
 
 
 def write_csv():
+    '''
+    write a list of shares
+    '''
 
     with open('shares.csv', 'w') as f:
         # create the csv writer
