@@ -1,7 +1,6 @@
 import csv
 from icecream import ic
 import itertools
-# open the file in the write mode
 
 
 
