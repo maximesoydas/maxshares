@@ -1,38 +1,64 @@
-# Knapsack problem, dynamic progamming
+import csv
+from icecream import ic
+# import itertoolss
+import yaml
 
 
-'''
-Dynamic programming
-
-- Recursion: Take a problem/function and write it where the function uses itself to solve the problem -> recompute computated values
-
-- Memoization: Store a solution when solved, in a dict or array. Use the stored solution instead of re-running the function
-
-- Bottom-up: flipping-around, starts at the base level and build up towards the problem you're trying to solve
-'''
-
-
-'''
-Shares & Wallet(500$)
-'''
-
-items = [('share-1',20,0.18), ('share-2',30,0.21), ('share-3',50,0.14),('share-4',70,0.12),('share-5',60,0.8),('share-6',80,0.3)]
-def dynamic_shares(items, capacity):
+def gen_shares_dict(csvfile):
     '''
-    Look at the capacity and split it up all the way to wallet size of 1$ then 2$,3$....
-    Run this until you reach desired wallet capacity
+    read a csvfile and return the shares into a dictionary
     '''
+    shares_list = []
+    shares_file = csv.DictReader(open(csvfile))
 
-    wallet = [0 for i in range(capacity+1)]
-    for i in range(capacity+1):
-        '''
-        check for all shares that can fit in the wallet
-        '''
-        for j in range(len(items)):
-            share_name,price,profit = items[j]
-            if(price < i):
-                wallet[i] = max(wallet[i], wallet[i-price]+ price*profit)
+    for share in shares_file:
+        
+        share['profit'] = float(share['profit']) / 100
+        share['price'] = float(share['price'])
+        shares_list.append(share)
+    return shares_list
 
-    return round(wallet[capacity])
 
-print(dynamic_shares(items,500))
+
+def best_wallet(shares):
+    sorted_shares = sorted(shares, key=lambda k: k['profit'], reverse=True)
+    budget = 500
+    profit = 0
+    wallet = []
+    for share in sorted_shares:
+        # print(share['profit'])
+        if budget - share['price'] < 0:
+            result = print(
+                    f'''e
+The best wallet contains these shares:
+
+{yaml.dump(wallet, allow_unicode=True, default_flow_style=False)}
+
+It returns a profit of {profit} for a budget of {500 - budget}
+                    ''')
+            return result
+        else:
+            budget -= share["price"]
+            profit = profit + share['price'] * share['profit']
+            wallet.append(share)
+
+
+
+csvfile = input('\n  Which csvfile to use: ')
+
+endloop = False
+
+while endloop == False:
+    try:
+        shares = gen_shares_dict(csvfile)
+        wallet = best_wallet(shares)
+        endloop = True
+    except FileNotFoundError:
+        print('\n File not found, please try again')
+        print('** File has to be in the same directory **')
+        csvfile = input('\n Which csvfile to use: \n')
+
+
+
+        
+
