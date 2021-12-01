@@ -60,6 +60,7 @@ def wallet_value(shares_list):
 
 
 def best_wallet(shares):
+    
     '''
     iterates over all the shares given in the argument
     returns the highest profit wallet for the price of 500
