@@ -66,7 +66,10 @@ def best_wallet(shares):
     returns the highest profit wallet for the price of 500
     '''
     wallets= []
-    # print(shares)
+    # Big O Notation
+    # Exponentiel = Recursion -> O(2^n)
+    # O(2^share) = nombre de combination
+    # Pour 20 actions voici le nombre de combinaison effectuer = 1 048 576
     for x in range(len(shares)):
         # print(x)
         for wallet in itertools.combinations(shares, x):

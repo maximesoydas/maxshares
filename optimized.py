@@ -1,8 +1,5 @@
 import csv
-from icecream import ic
-# import itertoolss
 import yaml
-import time
 import timeit
 import os
 
@@ -17,7 +14,9 @@ def screen():
       # for windows platfrom
       _ = os.system('cls')
 
+
 def gen_shares_dict(csvfile):
+
     '''
     read a csvfile and return the shares into a dictionary
     '''
@@ -40,13 +39,15 @@ def best_wallet(shares, csvfile):
     budget = 500
     profit = 0
     wallet = []
+    # Big O Notation = Linear
+    # O(share) = 1000 
     for share in sorted_shares:
         # If budget ever reaches 0 return the wallet
         if 0<= budget <=0.00:
             screen()
             print(f'\n\nYour whole budget of { 500 - budget } has been spent.\n\nIts profit is worth {profit}')
             break
-        # reduce the budget amount by the share['price'] amount
+         # reduce the budget amount by the share['price'] amount
         # until budget is between 0 and 0
         # or until the loop has ended
         else:
